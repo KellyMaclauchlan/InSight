@@ -6,9 +6,13 @@
 //  Copyright © 2017 Kelly Maclauchlan. All rights reserved.
 //
 
-import Foundation
+
 import Gloss
-class Game : Serializable {
+class Game : Glossy {
+    func toJSON() -> JSON? {
+        return nil;
+    }
+    
     internal var jsonProperties = ["players","timeLimit","flags","numberPlayers","numberHunters","lats","longs","gameCode"];
     
     
@@ -21,8 +25,33 @@ class Game : Serializable {
     var players:[Player]!
     var gameCode="wert"
     
-    init?(json:JSON)
-    
+    required init?(json:JSON){
+        self.numberPlayers=("numberOfPlayers"<~~json)!
+        self.timeLimit = ("timeLimit"<~~json)!
+        self.numberHunters=("numberOfHunters"<~~json)!
+        self.gameCode=(gameCode<~~json)!
+//        let people:[Player] = []
+        if let peopleJson:[JSON] = "players"<~~json,
+            let people = [Player].from(jsonArray:peopleJson){
+                self.players=people;
+        }
+//        self.flags=flags
+//        self.players=players
+//        self.lats=lats
+//        self.longs=longs
+    }
+    init(any:AnyObject){
+        let json = any as! JSON
+        self.numberPlayers=("numberOfPlayers"<~~json)!
+        self.timeLimit = ("timeLimit"<~~json)!
+        self.numberHunters=("numberOfHunters"<~~json)!
+        self.gameCode=("gameCode"<~~json)!
+        //        let people:[Player] = []
+        if let peopleJson:[JSON] = "players"<~~json,
+            let people = [Player].from(jsonArray:peopleJson){
+            self.players=people;
+        }
+    }
 //    init(numPlayers:Int, timeLim:Int,numHunters:Int,players:[Player],flags:[Flag],lats:[String],longs:[String],gameCode:String) {
 //        self.numberPlayers=numPlayers;
 //        self.timeLimit = timeLim;
@@ -35,9 +64,9 @@ class Game : Serializable {
 //
 //
 //    }
-//    init(){
-//
-//    }
+    init(){
+
+    }
 //    init(JSONString: String) {
 //
 //        do {

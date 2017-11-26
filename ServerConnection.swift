@@ -277,10 +277,10 @@ class ServerConnection{
     
     //convert objects to and from json
     func gameToJson(game: Game)->String{
-        return Serialize.toJSON(obj: game);
+        return ""//Serialize.toJSON(obj: game);
     }
     func gameFromJson(json: String)->Game{
-        return Game(JSONString: json)
+        return Game()//Game(JSONString: json)
     }
     
     func gameSettingsToJson(gameSettings: GameSettings)->String{

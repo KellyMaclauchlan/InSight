@@ -7,7 +7,10 @@
 //
 
 import Foundation
-class Player : Serializable {
+import Gloss
+class Player : Glossy {
+    
+    
     internal var jsonProperties = ["score","name","hunter","lats","longs"];
     
     
@@ -17,7 +20,29 @@ class Player : Serializable {
     var lats:[String] = []
     var longs:[String] = []
     
+    required init?(json: JSON) {
+        self.score = ("score"<~~json)!
+        self.name = ("name"<~~json)!
+        self.hunter = ("hunter"<~~json)!
+        self.lats = ("lats"<~~json)!
+        self.lats = ("longs"<~~json)!
+        //        if let latsJson:[JSON] = "lats"<~~json,
+        //            let arr = [String].from(jsonArray:latsJson){
+        //            self.lats=arr;
+        //        }
+        //        if let longsJson:[JSON] = "longs"<~~json,
+        //            let arr = [String].from(jsonArray:longsJson){
+        //            self.longs=arr;
+        //        }
+        //        self.lats=lats;
+        //        self.longs=longs;
+    }
+
     
+    func toJSON() -> JSON? {
+        return nil;
+        
+    }
     
     init(score:Int,name:String,hunter:Bool,lats:[String],longs:[String]) {
         self.score = score;
